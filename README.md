@@ -12,7 +12,7 @@ Simple! Just run the script compile.sh. The code is developed and tested under U
 ## How to reproduce the experiments in the paper with the Tasmania Coral Point Count dataset?
 
 In order to reproduce the results reported in our IbPRIA publication one simply has to type:
-'./svm_struct_test data/TasmaniaCoralPointCountDataset results 0 10' 
+<./svm_struct_test data/TasmaniaCoralPointCountDataset results 0 10> 
 
 This will complete a training, validation and testing process for the Structural SVM model proposed. All the hierarchical loss functions described in the paper will be evaluated.
 
