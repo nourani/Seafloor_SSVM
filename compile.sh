@@ -2,7 +2,7 @@
 # Compile the project
 
 echo "Compiling Hierarchical library"
-cd Hierarchical/
+cd hierarchical/
 mkdir build
 cd build
 cmake ../
