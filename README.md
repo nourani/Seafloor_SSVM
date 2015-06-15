@@ -1,10 +1,10 @@
-# Seafloor_SSVM
-This repository contains the source code implementation of the following IbPRIA 2015 publication:
+# Seafloor_SSVM - **Structural SVM for Hierarchical Classification**
 
-Navid Nourani-Vatani, Roberto J. Lopez-Sastre, and Stefan Williams .
-Structured Output Prediction with Hierarchical Loss Functions for Seafloor Imagery Taxonomic Categorization
-IbPRIA 2015
-[PDF](http://agamenon.tsc.uah.es/Personales/rlopez/docs/ibpria2015-nourani.pdf)
+##Introduction
+Seafloor_SSVM is a repository with an implementation of a Structural SVM for hierarchical classification. The source code provided contains the implementation described in our IbPRIA 2015 paper for the particular problem of seafloor imagery taxonomic categorization. If you find this code useful in your research, please consider citing:
+
+Navid Nourani-Vatani, Roberto J. Lopez-Sastre, and Stefan Williams. *Structured Output Prediction with Hierarchical Loss Functions for Seafloor Imagery Taxonomic Categorization*.**IPRIA 2015** [PDF](http://agamenon.tsc.uah.es/Personales/rlopez/docs/ibpria2015-nourani.pdf)
+
 
 ## How to compile the code?
 We provide the script compile.sh to compile the project.
