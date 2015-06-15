@@ -1,21 +1,17 @@
-# Makefile for SVM-multiclass, 03.07.04
+# Makefile for Seafloor_SSVM, 15.06.15
 
 #Use the following to compile under unix or cygwin
 CC = gcc
 LD = g++
 
-#Call 'make' using the following line to make CYGWIN produce stand-alone Windows executables
-#		make 'SFLAGS=-mno-cygwin'
-#CFLAGS =   $(SFLAGS) -O3 -fomit-frame-pointer -ffast-math -Wall 
-#LDFLAGS =  $(SFLAGS) -O3 -lm -Wall
 #FOR DEBUGGIN
 CFLAGS =   $(SFLAGS) -g -O2 -fomit-frame-pointer -ffast-math -Wall 
-LDFLAGS =  $(SFLAGS) -g -O2 -lm -Wall -stdlib=libc++
-
+LDFLAGS =  $(SFLAGS) -g -O2 -lm -Wall
 #CFLAGS =  $(SFLAGS) -pg -Wall
 #LDFLAGS = $(SFLAGS) -pg -lm -Wall
+
 LIBS=-L. -lm 
-#MYLIBS = Node.o Hierarchy.o HierarchicalWrapper.o
+
 MYLIBS = -lHierarchical
 
 all: svm_struct_test svm_multiclass_learn svm_multiclass_classify
@@ -59,6 +55,7 @@ svm_struct_api.o: svm_struct_api.c svm_struct_api.h svm_struct_api_types.h svm_s
 
 svm_struct_learn_custom.o: svm_struct_learn_custom.c svm_struct_api.h svm_light/svm_common.h svm_struct_api_types.h svm_struct/svm_struct_common.h
 	$(CC) -c $(CFLAGS) svm_struct_learn_custom.c -o svm_struct_learn_custom.o
-	
+
 svm_struct_test.c:
 	$(CC) svm_struct_test.c -o svm_struct_test
+

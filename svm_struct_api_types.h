@@ -23,7 +23,7 @@
 # include "svm_light/svm_common.h"
 # include "svm_light/svm_learn.h"
 
-#include "../Hierarchical/HierarchicalWrapper.h"
+#include "hierarchical/HierarchicalWrapper.h"
 
 # define INST_NAME          "Multi-Class SVM"
 # define INST_VERSION       "V2.20"
