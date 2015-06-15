@@ -10,6 +10,9 @@ make
 cp libHierarchical.a ../../libHierarchical.a
 cd ../../
 
+echo "Creating results folder"
+mkdir results
+
 echo "Compiling the Structured SVM code for hierarchical classification"
 make clean
 make all
