@@ -8,6 +8,10 @@
 /*   Author: Thorsten Joachims                                         */
 /*   Date: 03.07.04                                                    */
 /*                                                                     */
+/*                                                                     */
+/*   Modified by: Navid Nourani and Roberto Lopez-Sastre               */
+/*   Date: 15.06.15                                                    */
+/*                                                                     */
 /*   Copyright (c) 2004  Thorsten Joachims - All rights reserved       */
 /*                                                                     */
 /*   This software is available for non-commercial use only. It must   */
@@ -29,6 +33,7 @@ int compare_longs(const void *a, const void *b) {
 	return (*da > *db) - (*da < *db);
 }
 
+//Taxonomy definition
 void svm_struct_init_hierarchy(STRUCT_LEARN_PARM * sparm) {
 
 	sparm->hierarchy = newHierarchy();
@@ -107,14 +112,6 @@ SAMPLE read_struct_examples(char *file, STRUCT_LEARN_PARM *sparm) {
 		exit(1);
 	}
 
-//	for (i = 0; i < n; i++) {/* make sure all class labels are positive */
-//		if (target[i] < 1) {
-//			printf(
-//					"\nERROR: The class label '%lf' of example number %ld is '0'!\n",
-//					target[i], i + 1);
-//			exit(1);
-//		}
-//	}
 
 	instances_total = 0;
 	for (i = 0; i < n; i++) { /* copy docs over into new datastructure */
@@ -125,7 +122,6 @@ SAMPLE read_struct_examples(char *file, STRUCT_LEARN_PARM *sparm) {
 		examples[i].y.num_classes = num_classes;
 		instances_total++;
 	}
-//	instances_total = n;
 
 	free(target);
 	free(docs);
@@ -337,9 +333,7 @@ LABEL find_most_violated_constraint_marginrescaling(PATTERN x, LABEL y,
 			first = 0;
 		}
 	}
-	//printf( "y.label=%d: best=%d (%f)\n",
-//			y.label,
-//			bestclass, bestscore );
+
 	if (bestlabel == -1)
 		printf("ERROR: Only one class\n");
 	ybar.label = bestlabel;
@@ -399,14 +393,6 @@ double loss(LABEL y, LABEL ybar, STRUCT_LEARN_PARM *sparm) {
 		ham = ((double)tp + tn) / (tp + fp + fn + tn);
 	}
 
-//	static int done[20] = {0};
-//	if( y.label != ybar.label && done[y.label] == 0 ) {
-//		done[y.label] = 1;
-//
-//		printf( "y=%2d, y_=%2d, tp=%2d, fp=%2d, fn=%2d, tn=%2d\n",
-//				y.label, ybar.label, tp, fp, fn, tn);
-//
-//	}
 
 	if (sparm->loss_function == 0) { /* type 0 loss: 0/1 loss */
 		if (y.label == ybar.label) /* return 0, if y==ybar. return 100 else */
