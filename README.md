@@ -22,5 +22,44 @@ Type: `./svm_struct_test` for the online help.
 
 ## I want to use a different dataset and taxonomy. How should I proceed?
 Follow these steps:
-1. 
+
+### Creating your own hierarchy
+You can generate your own hierarchy by using the C++ class Hierarchy (or its corresponding C-wrapper) found in the hierarchy sub-folder.
+
+1. Add the total number of nodes by calling `addNodes(unsigned int n)`
+2. Connect children with their parents by calling `connectParentChield(int p, int c)`
+3. Call `reconnect()` to create the actual connections
+
+This is done in the function `void svm_struct_init_hierarchy(STRUCT_LEARN_PARM * sparm)` in `svm_strut_api.c`.
+
+#### example
+To create the hierarchy presented in the paper you need to do the following:
+
+```
+Hierarchy h;
+h.addNodes(20);
+h.connectParentChield(0, 1);
+h.connectParentChield(0, 4);
+h.connectParentChield(1, 2);
+h.connectParentChield(1, 3);
+h.connectParentChield(4, 5);
+h.connectParentChield(4, 6);
+h.connectParentChield(4, 7);
+h.connectParentChield(4, 8);
+h.connectParentChield(4, 9);
+h.connectParentChield(4, 10);
+h.connectParentChield(10, 11);
+h.connectParentChield(10, 14);
+h.connectParentChield(10, 17);
+h.connectParentChield(11, 12);
+h.connectParentChield(11, 13);
+h.connectParentChield(14, 15);
+h.connectParentChield(14, 16);
+h.connectParentChield(17, 18);
+h.connectParentChield(17, 19);
+h.reconnect();
+```
+
+### Using a different dataset
+
 
