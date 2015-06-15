@@ -30,7 +30,7 @@ You can generate your own hierarchy by using the C++ class Hierarchy (or its cor
 2. Connect children with their parents by calling `connectParentChield(int p, int c)`
 3. Call `reconnect()` to create the actual connections
 
-This is done in the function `void svm_struct_init_hierarchy(STRUCT_LEARN_PARM * sparm)` in `svm_strut_api.c`.
+This is done in the function `void svm_struct_init_hierarchy(STRUCT_LEARN_PARM * sparm)` in `svm_struct_api.c`.
 
 #### example
 To create the hierarchy presented in the paper you need to do the following:
@@ -61,5 +61,26 @@ h.reconnect();
 ```
 
 ### Using a different dataset
+Using your own dataset is easy, but you need to structure it to perform cross-validation. 
+
+* First of all, you need to separete your training and test data. The test set should **only** be used to generate your final result and should **not** be part of the training phase. You can choose the ratio between training and test yourself.
+  * Create a `test.dat` file (according to the SVM-Light package http://svmlight.joachims.org/) containing the test set.
+ * Create a `trainAll.dat` file containing all the (remainig) training data. 
+* Secondly, the training set (`trainAll.dat`) itself also needs to be separated for the purpose of cross-validation.
+ * Create a `validate.dat` file containing a subset of the `trainAll.dat` data.
+ * Create a `train.dat` file with the remaining of the `trainAll.dat` data.
+* Put your data inside `<your data dir>`.
+* Make sure your hierarchy is correct (see above about generating your own hierarchy).
+* Make the code
+* Run `svm_struct_test <your data dir> <your result dir> [loss 1] [loss n]` to perform complete train-validation-test with the given loss functions
+ * Call `svm_struct_test` without arguments to see the help
+ * Information about the generated SVM model and the final results are put in `<your result dir>`
+  
+ 
+ 
+
+
+
+ 
 
 
