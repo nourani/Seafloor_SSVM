@@ -7,7 +7,7 @@ Navid Nourani-Vatani, Roberto J. Lopez-Sastre, and Stefan Williams. *Structured 
 
 
 ## How to compile the code?
-Simple! Just run the script compile.sh. The code is developed and tested under Ubuntu 14.04 and the following libraries are required to build the code: gcc, cmake.
+Simple! Just run the script `./compile.sh` . The code is developed and tested under Ubuntu 14.04 and the following libraries are required to build the code: gcc, cmake.
 
 ## How to reproduce the experiments in the paper with the Tasmania Coral Point Count dataset?
 
@@ -18,9 +18,9 @@ In order to reproduce the results reported in our IbPRIA publication one simply 
 This will complete a training, validation and testing process for the Structural SVM model proposed. All the hierarchical loss functions described in the paper will be evaluated.
 
 ## How to run my own experiments?
-Type: ./svm_struct_test for the online help.
+Type: `./svm_struct_test` for the online help.
 
 ## I want to use a different dataset and taxonomy. How should I proceed?
 Follow these steps:
-TODO: explain this.
+1. 
 
