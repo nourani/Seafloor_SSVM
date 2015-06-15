@@ -11,9 +11,9 @@
 #include <math.h>
 #include <time.h>
 
-
+//C parameter of the Structural SVM (useful for cross validation)
 double Cs[] = { 1e-2, 1e-1, 1e+0, 1e+1, 1e+2 };
-#define nC 5
+#define nC 5 //number of C's to be used
 
 
 int main(int argc, char ** argv) {
@@ -24,7 +24,9 @@ int main(int argc, char ** argv) {
   int ret = 0;
   double acc[nC];
   double perf;
-  int measure = 0; // 0=f1, 1=avg pre, 2=avg rec, 3=acc
+  //Different evaluation metrics considered
+  // 0=f1, 1=avg pre, 2=avg rec, 3=acc
+  int measure = 0; 
   
   memset(acc, 0, sizeof(int) * nC);
   
@@ -45,7 +47,9 @@ int main(int argc, char ** argv) {
     resultsFolder = (char *) malloc(sizeof(char) * len);
     strcpy(resultsFolder, argv[2]);
   } else {
-    printf("Usage: \n\t%s data_dir results_dir [loss 1] [loss n]\n\n", argv[0]);
+    printf("Usage: \n\t%s data_dir results_dir [loss 1] [loss n]\n\n\n", argv[0]);
+    printf("data_dir: path with the training, validation and testing data.\n\n");
+    printf("results_dir: path to save the results.\n\n");
     printf("Different loss functions can be used:\n");
     printf("\t 0 : 0/1 loss\n");
     printf("\t 1 : squared difference\n");
@@ -57,7 +61,11 @@ int main(int argc, char ** argv) {
     printf("\t 7 : hierarchical hamming \n");
     printf("\t 8 : distance to nearest ancestor \n");
     printf("\t 9 : distance through the tree \n");
-    printf("\t 10 : std hamming \n");				
+    printf("\t 10 : std hamming \n\n");				
+    printf("Examples:\n\n");			
+    printf("\t Run experiment with loss 2: ./svm_struct_test data results 2\n");
+    printf("\t Run experiment evaluating all loss functions: ./svm_struct_test data results 0 10\n");
+			
     exit(1);
   }
 	
@@ -78,11 +86,11 @@ int main(int argc, char ** argv) {
   printf("data folder: %s\n", exampleFolder);
   printf("\tfiles: %s, %s, %s, %s\n", trainName, validName, trainAllName,
 	 testName);
-  /** ************************************************************
+  /* ************************************************************
    *
    * Train section
    *
-   */
+   * ***********************************************************/
   for (; loss_func <= loss_func_stop; loss_func++) {
     printf("Using loss function %d\n", loss_func);
     
@@ -97,7 +105,7 @@ int main(int argc, char ** argv) {
       printf("\n%s\n", cmd);
       ret = system(cmd);
       
-      // verify
+      // validation
       sprintf(cmd,
 	      "./svm_multiclass_classify -v 0 -r %d %s/%s %s/model%d.dat %s/results%d.dat",
 	      measure, exampleFolder, validName, resultsFolder,
@@ -124,7 +132,7 @@ int main(int argc, char ** argv) {
 	   Cs[bestC], best);    
     
     
-    // train the complete classifier on both test and validation data
+    // train the complete classifier on both training and validation data
     sprintf(cmd,
 	    "./svm_multiclass_learn -v 0 -t 0 -l %d -c %f %s/%s %s/model%d.dat",
 	    loss_func, Cs[bestC], exampleFolder, trainAllName,
@@ -133,12 +141,15 @@ int main(int argc, char ** argv) {
     ret = system(cmd);
 
     
-    /** ************************************************************
+    /* ************************************************************
      *
      * Test section
      * Using the above trained classifier on the test data
      *
-     */
+     * ***********************************************************/
+
+    //different evaluations metrics are reported
+    // Option -r 0 =>  f1
     sprintf(cmd,
 	    "./svm_multiclass_classify -v 0 -r 0 %s/%s %s/model%d.dat %s/results%d.dat",
 	    exampleFolder, testName, resultsFolder, loss_func,
@@ -146,6 +157,8 @@ int main(int argc, char ** argv) {
     printf("%s\n", cmd);
     ret = system(cmd) / 256;
     double f1 = ((ret * 100.) / 256.);
+    
+    // Option -r 1 =>  precision
     sprintf(cmd,
 	    "./svm_multiclass_classify -v 0 -r 1 %s/%s %s/model%d.dat %s/results%d.dat",
 	    exampleFolder, testName, resultsFolder, loss_func,
@@ -153,6 +166,8 @@ int main(int argc, char ** argv) {
     printf("%s\n", cmd);
     ret = system(cmd) / 256;
     double pre = ((ret * 100.) / 256.);
+
+    // Option -r 2 => recall
     sprintf(cmd,
 	    "./svm_multiclass_classify -v 0 -r 2 %s/%s %s/model%d.dat %s/results%d.dat",
 	    exampleFolder, testName, resultsFolder, loss_func,
@@ -160,6 +175,8 @@ int main(int argc, char ** argv) {
     printf("%s\n", cmd);
     ret = system(cmd) / 256;
     double rec = ((ret * 100.) / 256.);
+
+    // Option -r 3 => accuracy
     sprintf(cmd,
 	    "./svm_multiclass_classify -v 0 -r 3 %s/%s %s/model%d.dat %s/results%d.dat",
 	    exampleFolder, testName, resultsFolder, loss_func,
@@ -176,5 +193,5 @@ int main(int argc, char ** argv) {
   
   fclose(fp);
   
-	return 0;
+  return 0;
 }
