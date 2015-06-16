@@ -1,5 +1,5 @@
 /*
- * svm_struct_test.cpp
+ * svm_struct_test.c
  *
  *  Created on: Aug 22, 2013
  *      Authors: navid, rober
